@@ -1,1 +1,1 @@
-console.log(0)
+export { getQueryName } from './getQueryName'

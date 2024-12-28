@@ -1,0 +1,6 @@
+.env
+.env.*
+dist/
+
+# Node
+node_modules/

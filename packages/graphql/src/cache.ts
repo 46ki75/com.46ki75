@@ -10,7 +10,7 @@ abstract class Cache<T> {
   abstract get(): T | undefined
 }
 
-class SessionStorageCache<T> extends Cache<T> {
+export class SessionStorageCache<T> extends Cache<T> {
   /**
    * Remove the item from the cache
    */
@@ -58,7 +58,7 @@ class SessionStorageCache<T> extends Cache<T> {
   }
 }
 
-class LocalStorageCache<T> extends Cache<T> {
+export class LocalStorageCache<T> extends Cache<T> {
   /**
    * Remove the item from the cache
    */

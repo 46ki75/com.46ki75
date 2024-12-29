@@ -1,8 +1,24 @@
 {
   "name": "graphql",
-  "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0-alpha.0",
+  "description": "A GraphQL utility library for JavaScript.",
+  "type": "module",
+  "author": "Chomolungma Shirayuki",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:46ki75/elmethis.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
   "scripts": {
     "test": "vitest --run",
     "test:watch": "vitest",
@@ -12,9 +28,6 @@
     "prestart": "npm run build",
     "start": "node dist/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/node": "^22.10.2",
     "typescript": "^5.7.2",

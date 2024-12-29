@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git@github.com:46ki75/elmethis.git"
+    "url": "git@github.com:46ki75/com.46ki75.git"
   },
   "files": [
     "dist"

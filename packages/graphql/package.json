@@ -1,9 +1,8 @@
 {
   "name": "@com.46ki75/graphql",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publishConfig": {
-    "access": "public",
-    "publish-bramch": "main"
+    "access": "public"
   },
   "description": "A GraphQL utility library for JavaScript.",
   "type": "module",

@@ -1,6 +1,9 @@
 {
-  "name": "graphql",
+  "name": "@com.46ki75/graphql",
   "version": "0.1.0-alpha.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "A GraphQL utility library for JavaScript.",
   "type": "module",
   "author": "Chomolungma Shirayuki",

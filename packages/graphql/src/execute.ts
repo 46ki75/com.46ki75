@@ -1,18 +1,38 @@
+import { LocalStorageCache, SessionStorageCache } from './cache'
 import { getQueryName } from './getQueryName'
 
 export async function execute<T>({
   endpoint,
   query,
   variables,
-  headers
+  headers,
+  cache,
+  forceRefresh = false
 }: {
   endpoint: string
   query: string
   variables?: Record<string, any>
   headers?: Record<string, string>
+  cache?: 'localStorage' | 'sessionStorage'
+  forceRefresh?: boolean
 }): Promise<T> {
-  const queryName = getQueryName(query)
-  const cacheKey = `graphql:cache:${queryName}`
+  let cacheInstance: LocalStorageCache<T> | SessionStorageCache<T> | undefined =
+    undefined
+
+  if (cache === 'localStorage') {
+    const queryName = getQueryName(query)
+    const cacheKey = `graphql:cache:${queryName}`
+    cacheInstance = new LocalStorageCache<T>(cacheKey)
+  } else if (cache === 'sessionStorage') {
+    const queryName = getQueryName(query)
+    const cacheKey = `graphql:cache:${queryName}`
+    cacheInstance = new SessionStorageCache<T>(cacheKey)
+  }
+
+  if (cacheInstance != null && !forceRefresh) {
+    const cachedData = cacheInstance.get()
+    if (cachedData != null) return cachedData
+  }
 
   const response = await fetch(endpoint, {
     method: 'POST',

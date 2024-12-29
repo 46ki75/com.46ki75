@@ -2,6 +2,7 @@ import { LocalStorageCache, SessionStorageCache } from './cache'
 import { getQueryName } from './getQueryName'
 
 export async function execute<T>({
+  method = 'POST',
   endpoint,
   query,
   operationName,
@@ -11,6 +12,7 @@ export async function execute<T>({
   maxAge = 24 * 60 * 60,
   forceRefresh = true
 }: {
+  method?: string
   endpoint: string
   query: string
   operationName?: string
@@ -45,7 +47,7 @@ export async function execute<T>({
   }
 
   const response = await fetch(endpoint, {
-    method: 'POST',
+    method,
     headers: {
       'Content-Type': 'application/json',
       ...headers

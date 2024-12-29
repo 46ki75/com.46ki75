@@ -10,16 +10,46 @@ export async function execute<T>({
   headers,
   cache,
   maxAge = 24 * 60 * 60,
-  forceRefresh = true
+  forceRefresh = false
 }: {
+  /**
+   * The HTTP method to use.
+   * @default 'POST'
+   */
   method?: string
+  /**
+   * The GraphQL endpoint to send the request to
+   */
   endpoint: string
+  /**
+   * The GraphQL query to send with the request
+   */
   query: string
+  /**
+   * The operation name to send with the request
+   */
   operationName?: string
+  /**
+   * The variables to send with the request
+   */
   variables?: Record<string, any>
+  /**
+   * The headers to send with the request
+   */
   headers?: Record<string, string>
+  /**
+   * The cache type to use.
+   * If `localStorage` or `sessionStorage` is provided, the cache will be enabled.
+   */
   cache?: 'localStorage' | 'sessionStorage'
+  /**
+   * The max age of the cache [s]
+   */
   maxAge?: number
+  /**
+   * Force refresh the cache (disable cache).
+   * @default false
+   */
   forceRefresh?: boolean
 }): Promise<T> {
   let enableCache = cache != null

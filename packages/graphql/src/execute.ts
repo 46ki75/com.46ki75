@@ -20,20 +20,26 @@ export async function execute<T>({
   maxAge?: number
   forceRefresh?: boolean
 }): Promise<T> {
+  let enableCache = cache != null
+  if (forceRefresh) enableCache = false
+
   let cacheInstance: LocalStorageCache<T> | SessionStorageCache<T> | undefined =
     undefined
 
-  if (cache === 'localStorage') {
-    const queryName = operationName ?? getQueryName(query)
-    const cacheKey = `graphql:cache:${queryName}`
-    cacheInstance = new LocalStorageCache<T>(cacheKey)
-  } else if (cache === 'sessionStorage') {
-    const queryName = operationName ?? getQueryName(query)
-    const cacheKey = `graphql:cache:${queryName}`
-    cacheInstance = new SessionStorageCache<T>(cacheKey)
+  const queryName = operationName ?? getQueryName(query)
+  if (queryName == null) enableCache = false
+
+  if (enableCache) {
+    if (cache === 'localStorage') {
+      const cacheKey = `graphql:cache:${queryName}`
+      cacheInstance = new LocalStorageCache<T>(cacheKey)
+    } else if (cache === 'sessionStorage') {
+      const cacheKey = `graphql:cache:${queryName}`
+      cacheInstance = new SessionStorageCache<T>(cacheKey)
+    }
   }
 
-  if (cacheInstance != null && !forceRefresh) {
+  if (enableCache && cacheInstance != null) {
     const cachedData = cacheInstance.get()
     if (cachedData != null) return cachedData
   }
@@ -53,7 +59,7 @@ export async function execute<T>({
     throw new Error(JSON.stringify(errors, null, 2))
   }
 
-  if (cacheInstance != null) {
+  if (enableCache && cacheInstance != null) {
     cacheInstance.set({ maxAge, data })
   }
 

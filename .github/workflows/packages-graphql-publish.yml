@@ -2,6 +2,9 @@ name: Publish package (@com.46ki75/graphql)
 
 on:
   workflow_dispatch:
+  push: 
+    tags:
+      - '@com.46ki75/graphql@*'
 
 jobs:
   publish:

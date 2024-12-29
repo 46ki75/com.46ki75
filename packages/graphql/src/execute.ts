@@ -4,6 +4,7 @@ import { getQueryName } from './getQueryName'
 export async function execute<T>({
   endpoint,
   query,
+  operationName,
   variables,
   headers,
   cache,
@@ -12,6 +13,7 @@ export async function execute<T>({
 }: {
   endpoint: string
   query: string
+  operationName?: string
   variables?: Record<string, any>
   headers?: Record<string, string>
   cache?: 'localStorage' | 'sessionStorage'
@@ -22,11 +24,11 @@ export async function execute<T>({
     undefined
 
   if (cache === 'localStorage') {
-    const queryName = getQueryName(query)
+    const queryName = operationName ?? getQueryName(query)
     const cacheKey = `graphql:cache:${queryName}`
     cacheInstance = new LocalStorageCache<T>(cacheKey)
   } else if (cache === 'sessionStorage') {
-    const queryName = getQueryName(query)
+    const queryName = operationName ?? getQueryName(query)
     const cacheKey = `graphql:cache:${queryName}`
     cacheInstance = new SessionStorageCache<T>(cacheKey)
   }
@@ -42,7 +44,7 @@ export async function execute<T>({
       'Content-Type': 'application/json',
       ...headers
     },
-    body: JSON.stringify({ query, variables })
+    body: JSON.stringify({ query, variables, operationName })
   })
 
   const { data, errors }: { data: T; errors: any } = await response.json()

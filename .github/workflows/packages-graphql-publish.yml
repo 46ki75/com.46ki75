@@ -1,0 +1,42 @@
+name: Publish package (@com.46ki75/graphql)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    strategy:
+      matrix:
+        node-version:
+          - 22.x
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '9'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --recursive
+
+      - name: Run Build Test
+        run: pnpm publish
+        working-directory: packages/graphql
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,4 +1,4 @@
-import { getQueryName } from './getQueryName'
+import { getQueryName } from './getQueryName.js'
 import { test, expect } from 'vitest'
 
 test('getQueryName', () => {

@@ -1,5 +1,5 @@
-import { LocalStorageCache, SessionStorageCache } from './cache'
-import { getQueryName } from './getQueryName'
+import { LocalStorageCache, SessionStorageCache } from './cache.js'
+import { getQueryName } from './getQueryName.js'
 
 export async function execute<T>({
   method = 'POST',

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { execute } from './execute'
+import { execute } from './execute.js'
 
 describe('execute function', async () => {
   test('simple query', async () => {

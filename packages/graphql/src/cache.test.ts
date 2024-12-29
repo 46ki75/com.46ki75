@@ -3,9 +3,8 @@
  * @see https://vitest.dev/config/#environment
  */
 
-import { expect, test } from 'vitest'
-import { LocalStorageCache, SessionStorageCache } from './cache'
-import { describe } from 'node:test'
+import { expect, test, describe } from 'vitest'
+import { LocalStorageCache, SessionStorageCache } from './cache.js'
 
 describe('LocalStorageCache', async () => {
   test('Set and Get', async () => {

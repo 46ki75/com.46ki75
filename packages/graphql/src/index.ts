@@ -1,3 +1,3 @@
-export { getQueryName } from './getQueryName'
-export { LocalStorageCache, SessionStorageCache } from './cache'
-export { execute } from './execute'
+export { getQueryName } from './getQueryName.js'
+export { LocalStorageCache, SessionStorageCache } from './cache.js'
+export { execute } from './execute.js'

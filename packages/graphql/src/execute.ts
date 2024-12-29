@@ -7,13 +7,15 @@ export async function execute<T>({
   variables,
   headers,
   cache,
-  forceRefresh = false
+  maxAge = 24 * 60 * 60,
+  forceRefresh = true
 }: {
   endpoint: string
   query: string
   variables?: Record<string, any>
   headers?: Record<string, string>
   cache?: 'localStorage' | 'sessionStorage'
+  maxAge?: number
   forceRefresh?: boolean
 }): Promise<T> {
   let cacheInstance: LocalStorageCache<T> | SessionStorageCache<T> | undefined =
@@ -44,6 +46,14 @@ export async function execute<T>({
   })
 
   const { data, errors }: { data: T; errors: any } = await response.json()
+
+  if (errors) {
+    throw new Error(JSON.stringify(errors, null, 2))
+  }
+
+  if (cacheInstance != null) {
+    cacheInstance.set({ maxAge, data })
+  }
 
   return data
 }

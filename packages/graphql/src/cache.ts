@@ -22,11 +22,12 @@ export class SessionStorageCache<T> extends Cache<T> {
 
   /**
    *  Set the item in the cache
-   * @param param0 The max age of the cache and the data to store
+   * @param param0.maxAge The max age of the cache [s]
+   * @param param0.data The data to store
    */
   set({ maxAge, data }: { maxAge: number; data: T }): void {
     if (typeof window !== 'undefined') {
-      const expires = new Date(Date.now() + maxAge)
+      const expires = new Date(Date.now() + maxAge * 1000)
       sessionStorage.setItem(this.key, JSON.stringify({ expires, data }))
     }
   }
@@ -70,11 +71,12 @@ export class LocalStorageCache<T> extends Cache<T> {
 
   /**
    *  Set the item in the cache
-   * @param param0 The max age of the cache and the data to store
+   * @param param0.maxAge The max age of the cache [s]
+   * @param param0.data The data to store
    */
   set({ maxAge, data }: { maxAge: number; data: T }): void {
     if (typeof window !== 'undefined') {
-      const expires = new Date(Date.now() + maxAge)
+      const expires = new Date(Date.now() + maxAge * 1000)
       localStorage.setItem(this.key, JSON.stringify({ expires, data }))
     }
   }
